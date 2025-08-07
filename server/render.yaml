@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: paperball-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: paperball-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: paperball-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: paperball-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: paperball-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: paperball-db
+          property: database
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  - name: paperball-db
+    plan: free
+    databaseName: paperball
+    user: paperball_user
